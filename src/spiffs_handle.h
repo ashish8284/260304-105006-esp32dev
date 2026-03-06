@@ -5,6 +5,7 @@ String mqtt_srv;
 String mqtt_usr;
 String mqtt_pwd;
 String mqtt_topic;
+String mqtt_mode;
 String mqtt_topic_sub;
 const char* ParaFile = "/Para.json";
 
@@ -30,6 +31,7 @@ void readFile(const char* path) {
   mqtt_usr = doc["MQTT_USR"].as<String>();
   mqtt_pwd = doc["MQTT_PWD"].as<String>();
   mqtt_topic = doc["MQTT_TOPIC"].as<String>();
+  mqtt_mode = doc["MQTT_MODE"].as<String>();
   char MSG[250];
   serializeJson(doc, MSG);
   Serial.println(MSG);
