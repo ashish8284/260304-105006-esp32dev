@@ -28,7 +28,7 @@ void saveParamsCallback() {
   doc["MQTT_TOPIC"] = mqtt_topic;
   char MSG[256];
   serializeJson(doc, MSG);
-  Serial.println(MSG);
+  //Serial.println(MSG);
   writeFile(ParaFile, MSG);
 }
 void wifi_manager_setup() {
@@ -58,8 +58,8 @@ void wifi_manager_setup() {
     JsonDocument doc;
     doc["IP"] = IP;
     doc.shrinkToFit();
-    serializeJson(doc, Serial);
-    Serial.println();
+    //serializeJson(doc, Serial);
+    //Serial.println();
   } else {
     wifi_sts = false;
     ESP.restart();

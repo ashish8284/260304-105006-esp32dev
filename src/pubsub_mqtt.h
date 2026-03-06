@@ -34,15 +34,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
   char output[26];
   doc.shrinkToFit();
   serializeJson(doc, _Debug);
-  serializeJson(doc, Serial);
-  Serial.println();
   _Debug.println();
 }
 boolean reconnect() {
   int timeout_count = 0;
   led_blink(3, 200);
   while (!client.connected()) {
-    if (timeout_count == 0) Serial.println("Attempting MQTT connection...");
+    // if (timeout_count == 0) Serial.println("Attempting MQTT connection...");
     String clientId = "tadlcl-";
     clientId += String(random(0xffff), HEX);
     if (client.connect(clientId.c_str(), mqtt_usr_chr, mqtt_pass_chr)) {
@@ -50,11 +48,9 @@ boolean reconnect() {
     } else {
       timeout_count += 1;
       if (timeout_count > 50) {
-        Serial.println("Attempting Failed");
         break;
       }
     }
-    // Serial.print("MQTT Connected");
   }
   return client.connected();
 }
@@ -65,7 +61,7 @@ void pubsub_mqtt_setup() {
   mqtt_topic_chr = mqtt_topic.c_str();
   mqtt_topic_sub = mqtt_topic + "_SUB";
   mqtt_topic_sub_char = mqtt_topic_sub.c_str();
-  Serial.println(mqtt_topic_sub_char);
+  // Serial.println(mqtt_topic_sub_char);
   client.setServer(mqtt_ser_chr, 1883);
   client.setCallback(callback);
 }

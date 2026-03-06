@@ -25,7 +25,6 @@ void serial_read_json_chk() {
     char output[1024];
     doc.shrinkToFit();
     serializeJson(doc, output);
-    Serial.print(output);
     if (mqtt_sts) client.publish(mqtt_topic_chr, output);
   }
 }
@@ -39,7 +38,7 @@ void Networ_Sts_Post() {
     ip_doc["Mqt"] = 0;
   }
   ip_doc.shrinkToFit();
-  serializeJson(ip_doc, Serial);
+  serializeJson(ip_doc, _Debug);
   _Debug.println();
 }
 
