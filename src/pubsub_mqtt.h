@@ -36,6 +36,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   serializeJson(doc, _Debug);
   serializeJson(doc, Serial);
   Serial.println();
+  _Debug.println();
 }
 boolean reconnect() {
   int timeout_count = 0;
@@ -53,7 +54,7 @@ boolean reconnect() {
         break;
       }
     }
-    Serial.print("MQTT Connected");
+    // Serial.print("MQTT Connected");
   }
   return client.connected();
 }

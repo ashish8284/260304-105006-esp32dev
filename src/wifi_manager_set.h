@@ -1,7 +1,7 @@
 #include <WiFiManager.h>
 WiFiManager wm;
 bool wifi_sts = false;
-int reset_pin = 16;
+int reset_pin = 19;
 
 WiFiManagerParameter custom_mqtt_server("server", "mqtt Server", "", 40);
 WiFiManagerParameter custom_mqtt_user("user", "mqtt User", "", 40);
@@ -34,17 +34,21 @@ void saveParamsCallback() {
 void wifi_manager_setup() {
   pinMode(reset_pin, INPUT_PULLUP);
   bool reset_flag = digitalRead(reset_pin);
-  if (!reset_flag) {
-    wm.resetSettings();
+  if (reset_flag) {
+    delay(5000);
+    if (reset_flag){
     led_blink(10, 100);
+    wm.setDebugOutput(false);
+    wm.resetSettings();
+    }
   }
+  wm.setDebugOutput(false);
   wm.addParameter(&custom_mqtt_server);
   wm.addParameter(&custom_mqtt_user);
   wm.addParameter(&custom_mqtt_password);
   wm.addParameter(&custom_mqtt_topic);
   wm.setConfigPortalBlocking(true);
   wm.setSaveParamsCallback(saveParamsCallback);
-  wm.setDebugOutput(false);
   wm.setWiFiAutoReconnect(true);
   wm.setConfigPortalTimeout(120);
   led_blink(3, 200);
